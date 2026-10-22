@@ -27,9 +27,7 @@ fun AppNavigation ()
     ){
         composable(Routes.PRINCIPAL){
             PrincipalScreen(
-                onNavigateToLogin = {
-                    navController.navigate(Routes.LOGIN)
-                }
+
             )
         }
 
@@ -42,7 +40,13 @@ fun AppNavigation ()
         }
 
         composable(Routes.REGISTER){
-            RegisterScreen()
+            RegisterScreen(
+                onNavigateToLogin = {
+                    navController.navigate(Routes.LOGIN){
+                        popUpTo(Routes.LOGIN) { inclusive = true }
+                    }
+                }
+            )
         }
     }
 }
