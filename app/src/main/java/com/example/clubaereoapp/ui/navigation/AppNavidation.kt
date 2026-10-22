@@ -27,7 +27,7 @@ fun AppNavigation ()
     ){
         composable(Routes.PRINCIPAL){
             PrincipalScreen(
-                onNavigateToLogin = { //??? Algo se me esta pasando por alto (pero bueno mañana lo vere)
+                onNavigateToLogin = {
                     navController.navigate(Routes.LOGIN)
                 }
             )
