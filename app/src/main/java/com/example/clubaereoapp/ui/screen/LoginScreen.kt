@@ -24,11 +24,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.clubaereoapp.ui.viewModel.LoginViewModel
-import org.w3c.dom.Text
 
 @Composable
 
-fun Login(
+fun LoginScreen(
     onNavigateToRegister: () -> Unit,
     viewModel: LoginViewModel = viewModel()
 ){
