@@ -1,33 +1,24 @@
 package com.example.clubaereoapp.ui.viewModel
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.example.clubaereoapp.data.database.AppDatabase
+import com.example.clubaereoapp.data.local.entity.UsuarioEntity
 import com.example.clubaereoapp.model.RegisterModel
+import kotlinx.coroutines.launch
+import android.content.Context
 
 class RegisterViewModel : ViewModel() {
     var uiState by mutableStateOf(value = RegisterModel())
         private set
-
-    fun onNameChanged(name: String){
-        uiState = uiState.copy(name = name, errorMessage = null)
-    }
-
-    fun onEmailChanged(email: String){
-        uiState = uiState.copy(email = email, errorMessage = null)
-    }
-
-    fun onPasswordChanged(password: String){
-        uiState = uiState.copy(password = password, errorMessage = null)
-    }
-
-    fun onConfirmPasswordChanged(confirmPassword: String){
-        uiState = uiState.copy(confirmPassword = confirmPassword, errorMessage = null)
-    }
-
-    fun onRegisterClick(onSuccess: () -> Unit){
+    fun onNameChanged(name: String){ uiState = uiState.copy(name = name, errorMessage = null) }
+    fun onEmailChanged(email: String){ uiState = uiState.copy(email = email, errorMessage = null) }
+    fun onPasswordChanged(password: String){ uiState = uiState.copy(password = password, errorMessage = null) }
+    fun onConfirmPasswordChanged(confirmPassword: String){ uiState = uiState.copy(confirmPassword = confirmPassword, errorMessage = null) }
+    fun onRegisterClick(context: Context, onSuccess: () -> Unit){
 
         val state = uiState
 
@@ -40,9 +31,24 @@ class RegisterViewModel : ViewModel() {
             uiState = uiState.copy(errorMessage = "Las contraseña no coinciden")
         }
 
-        Log.d("Register", "Usuario Registrado: ${state.name} (${state.email})")
-        uiState = uiState.copy(errorMessage = null)
-        onSuccess()
+        //Metodo asíncronico en SQLite con room
+        viewModelScope.launch {
+            val db = AppDatabase.getDatabase(context)
+            val existingUser = db.usuarioDao().getUserByEmail(state.email)
+
+            if(existingUser != null){
+                uiState = uiState.copy(errorMessage = "El correo ya esta registrado.")
+            }else{
+                val newUser = UsuarioEntity(
+                    name = state.name,
+                    email = state.email,
+                    password = state.password
+                )
+                db.usuarioDao().registerUser(newUser)
+                uiState = uiState.copy(errorMessage = null)
+                onSuccess()
+            }
+        }
 
     }
 

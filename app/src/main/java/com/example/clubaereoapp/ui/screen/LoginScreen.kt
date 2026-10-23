@@ -1,4 +1,5 @@
 package com.example.clubaereoapp.ui.screen
+import android.widget.Toast
 import com.example.clubaereoapp.ui.components.Header
 import com.example.clubaereoapp.ui.components.Footer
 
@@ -19,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -29,9 +31,12 @@ import com.example.clubaereoapp.ui.viewModel.LoginViewModel
 
 fun LoginScreen(
     onNavigateToRegister: () -> Unit,
+    onLoginSuccess: () -> Unit,
     viewModel: LoginViewModel = viewModel()
 ){
     val state = viewModel.uiState
+    val context = LocalContext.current
+
     Scaffold(
         topBar = { Header (title = "Iniciar sesion")},
         bottomBar = { Footer() }
@@ -68,9 +73,15 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(24.dp))
+
             //boton de ingresar
             Button(
-                onClick = { viewModel.onLoginClick()},
+                onClick = {
+                    viewModel.onLoginClick(context){
+                        Toast.makeText(context, "Bienvenido, Socio", Toast.LENGTH_SHORT)
+                        onLoginSuccess()
+                    }
+                },
                 modifier = Modifier.fillMaxWidth()
 
             ){

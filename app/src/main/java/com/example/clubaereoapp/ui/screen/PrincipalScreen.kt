@@ -55,7 +55,7 @@ fun PrincipalScreen(
                 modifier = Modifier.padding(16.dp)
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.LogoAvion),
+                    painter = painterResource(id = R.drawable.logoavion),
                     contentDescription = "logo Remplazable de avion",
                     modifier = Modifier.size(220.dp)
 
@@ -65,6 +65,7 @@ fun PrincipalScreen(
                 Button(
                     onClick = {
                         Toast.makeText(context, "Bienvenido, Socio", Toast.LENGTH_SHORT).show()
+                        onNavigateToLogin()
                     },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF85E0F8),
