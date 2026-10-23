@@ -29,12 +29,13 @@ class LoginViewModel : ViewModel(){
         errorMessage = null
     }
     //Metodo que se ejecuta al hacer click sobre el boton ingresar
-    fun onLoginClick(context: Context, onSuccess: () -> Unit ) {
+    fun onLoginClick(context: Context, onError: () -> Unit, onSuccess: () -> Unit) {
         val email = uiState.email
         val password = uiState.password
 
         if(email.isBlank() || password.isBlank()){
-            errorMessage = "Ingrese correo y contreseña"
+            errorMessage = "Ingrese correo y contraseña"
+            onError()
             return
         }
 
@@ -46,7 +47,8 @@ class LoginViewModel : ViewModel(){
                 errorMessage = null
                 onSuccess() // La sesion se inicia
             }else{
-                errorMessage = "Correo o contreseña incorrectos"
+                errorMessage = "Correo o contraseña incorrectos"
+                onError()
             }
         }
     }

@@ -72,15 +72,23 @@ fun LoginScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 modifier = Modifier.fillMaxWidth()
             )
+            viewModel.errorMessage?.let {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = it, color = MaterialTheme.colorScheme.error)
+            }
             Spacer(modifier = Modifier.height(24.dp))
 
             //boton de ingresar
             Button(
                 onClick = {
-                    viewModel.onLoginClick(context){
-                        Toast.makeText(context, "Bienvenido, Socio", Toast.LENGTH_SHORT)
-                        onLoginSuccess()
-                    }
+                    viewModel.onLoginClick(
+                        context = context,
+                        onError = { vibrar(context, 500L) },
+                        onSuccess = {
+                            Toast.makeText(context, "Bienvenido, Socio", Toast.LENGTH_SHORT).show()
+                            onLoginSuccess()
+                        }
+                    )
                 },
                 modifier = Modifier.fillMaxWidth()
 
