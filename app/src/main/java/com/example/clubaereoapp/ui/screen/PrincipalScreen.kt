@@ -61,6 +61,8 @@ fun PrincipalScreen(
 
                 )
                 Spacer(modifier = Modifier.height(32.dp))
+                TarjetaBateria(context)
+                Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
                     onClick = {
@@ -80,6 +82,7 @@ fun PrincipalScreen(
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
                     )
                 }
+
             }
 
         }
