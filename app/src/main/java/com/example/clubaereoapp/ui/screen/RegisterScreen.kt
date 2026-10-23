@@ -110,7 +110,7 @@ fun RegisterScreen(
 
             Button(
                 onClick = {
-                    viewModel.onRegisterClick {
+                    viewModel.onRegisterClick(context) {
                         Toast.makeText(
                             context,
                             "Registro exitoso, inicie sesion",

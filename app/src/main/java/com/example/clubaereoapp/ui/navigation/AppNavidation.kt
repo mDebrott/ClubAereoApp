@@ -14,6 +14,7 @@ object Routes {
     const val LOGIN = "login"
     const val REGISTER = "register"
     const val PRINCIPAL = "principal"
+    const val INICIO = "inicio"
 }
 
 @Composable
@@ -27,7 +28,9 @@ fun AppNavigation ()
     ){
         composable(Routes.PRINCIPAL){
             PrincipalScreen(
-
+                onNavigateToLogin = {
+                    navController.navigate(Routes.LOGIN)
+                }
             )
         }
 
@@ -35,6 +38,11 @@ fun AppNavigation ()
             LoginScreen(
                 onNavigateToRegister = {
                     navController.navigate(Routes.REGISTER)
+                },
+                onLoginSuccess = {
+                    navController.navigate(Routes.PRINCIPAL){
+                        popUpTo(Routes.LOGIN) {inclusive = true}
+                    }
                 }
             )
         }
@@ -47,6 +55,10 @@ fun AppNavigation ()
                     }
                 }
             )
+        }
+
+        composable(Routes.INICIO){
+            com.example.clubaereoapp.ui.screen.IncioScreen()
         }
     }
 }
