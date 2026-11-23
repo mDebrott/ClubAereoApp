@@ -281,6 +281,11 @@ fun PrincipalScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                // Componente API Externa: Clima Aeronáutico en Tiempo Real (IE 3.1.4)
+                com.example.clubaereoapp.ui.components.ClimaAeronauticoCard()
+
+                Spacer(modifier = Modifier.height(16.dp))
+
                 // Componente de batería
                 TarjetaBateria(context)
             }

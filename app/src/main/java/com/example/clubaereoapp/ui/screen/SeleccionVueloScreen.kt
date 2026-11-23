@@ -219,6 +219,9 @@ fun SeleccionVueloScreen(
                     }
                 }
 
+                // Componente API Externa (Clima Aeronáutico) - IE 3.1.4
+                com.example.clubaereoapp.ui.components.ClimaAeronauticoCard()
+
                 if (reservationSuccess) {
                     // Confirmation Success View
                     Card(
